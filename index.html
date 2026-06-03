@@ -852,11 +852,15 @@ function coletarDados(){
 
 // envio
 async function enviar(){
-  const cadOk=SECS.every(p=>on(p+'-cad-sim')||on(p+'-cad-nao'));
-  if(!cadOk){
-    const falt=SECS.filter(p=>!on(p+'-cad-sim')&&!on(p+'-cad-nao'));
-    const nomes={fz:'Filezitos',sh:'Sheba',bs:'Barriguinha',wk:'Whiskas SF'};
-    alert('Por favor, responda se está cadastrado em:\n• '+falt.map(p=>nomes[p]).join('\n• '));
+  // Seção completa se: "não cadastrado" (encerra) OU "cadastrado" + respondeu presença
+  const nomes={fz:'Filezitos',sh:'Sheba',bs:'Barriguinha Saudável',wk:'Whiskas Superfoods'};
+  const falt=SECS.filter(p=>{
+    if(on(p+'-cad-nao')) return false;
+    if(on(p+'-cad-sim')&&(on(p+'-sim')||on(p+'-nao'))) return false;
+    return true;
+  });
+  if(falt.length){
+    alert('Por favor, complete as informações de:\n• '+falt.map(p=>nomes[p]).join('\n• '));
     openSec(falt[0]);return;
   }
   ULTIMO=coletarDados();tela('t-env');
@@ -887,17 +891,78 @@ function reiniciar(){
 function tentarNov(){tela('t3');}
 
 function resetProduto(pfx){
-  // reset all toggles, sizes, prices within a section
-  document.querySelectorAll('#sb-'+pfx+' .tgb').forEach(b=>b.classList.remove('on'));
-  document.querySelectorAll('#sb-'+pfx+' .chk').forEach(p=>{p.classList.remove('on');const i=p.querySelector('input');if(i)i.checked=false;});
-  document.querySelectorAll('#sb-'+pfx+' .szp').forEach(p=>{p.classList.remove('on');const i=p.querySelector('input');if(i)i.checked=false;});
-  document.querySelectorAll('#sb-'+pfx+' input[type=number]').forEach(i=>i.value=0);
-  document.querySelectorAll('#sb-'+pfx+' input[type=text]').forEach(i=>i.value='');
-  document.querySelectorAll('#sb-'+pfx+' .pr-row').forEach(r=>r.style.display='none');
-  document.querySelectorAll('#sb-'+pfx+' .conc-sub').forEach(s=>s.classList.remove('vis'));
-  document.querySelectorAll('#sb-'+pfx+' .outro-inp').forEach(s=>s.classList.remove('vis'));
-  [pfx+'c-checks',pfx+'-pos-pres',pfx+'-fr-marcas'].forEach(hide);
-  const stEl=$('st-'+pfx);if(stEl){stEl.textContent='Pendente';stEl.className='st st-pend';}
+
+  // NÃO limpar os botões de cadastro
+  document.querySelectorAll(
+    '#sb-'+pfx+' .tgb:not([id$="-cad-sim"]):not([id$="-cad-nao"])'
+  ).forEach(b=>{
+    b.classList.remove('on');
+  });
+
+  // concorrentes
+  document.querySelectorAll('#sb-'+pfx+' .chk').forEach(p=>{
+    p.classList.remove('on');
+
+    const i = p.querySelector('input');
+    if(i) i.checked = false;
+  });
+
+  // tamanhos
+  document.querySelectorAll('#sb-'+pfx+' .szp').forEach(p=>{
+    p.classList.remove('on');
+
+    const i = p.querySelector('input');
+    if(i) i.checked = false;
+  });
+
+  // inputs numéricos
+  document.querySelectorAll(
+    '#sb-'+pfx+' input[type=number]'
+  ).forEach(i=>{
+    i.value = 0;
+  });
+
+  // textos
+  document.querySelectorAll(
+    '#sb-'+pfx+' input[type=text]'
+  ).forEach(i=>{
+    i.value = '';
+  });
+
+  // esconder preços
+  document.querySelectorAll(
+    '#sb-'+pfx+' .pr-row'
+  ).forEach(r=>{
+    r.style.display = 'none';
+  });
+
+  // esconder subseções
+  document.querySelectorAll(
+    '#sb-'+pfx+' .conc-sub'
+  ).forEach(s=>{
+    s.classList.remove('vis');
+  });
+
+  document.querySelectorAll(
+    '#sb-'+pfx+' .outro-inp'
+  ).forEach(s=>{
+    s.classList.remove('vis');
+  });
+
+  // esconder blocos
+  [
+    pfx+'c-checks',
+    pfx+'-pos-pres',
+    pfx+'-fr-marcas'
+  ].forEach(hide);
+
+  // status
+  const stEl = $('st-'+pfx);
+
+  if(stEl){
+    stEl.textContent = 'Pendente';
+    stEl.className = 'st st-pend';
+  }
 }
 
 function resetF(){
