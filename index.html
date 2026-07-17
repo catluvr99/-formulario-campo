@@ -263,6 +263,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
     </div>
     <div id="fz-fr-marcas" class="oculto">
       <div class="frentes" style="margin-top:6px">
+        <div class="fr-row" id="fr-fz-pedigree-frrow" style="display:none"><span>Frentes Petiscos Pedigree<span class="fr-sub">(todas as linhas)</span></span><div class="num"><button onclick="adj('fr-fz-pedigree',-1)">−</button><input type="number" id="fr-fz-pedigree" value="0" min="0"><button onclick="adj('fr-fz-pedigree',1)">+</button></div></div>
         <div class="fr-row" id="fr-fz-frrow" style="display:none"><span>Frentes Filezitos</span><div class="num"><button onclick="adj('fr-fz',-1)">−</button><input type="number" id="fr-fz" value="0" min="0"><button onclick="adj('fr-fz',1)">+</button></div></div>
         <div class="fr-row" id="fr-doguitos-frrow" style="display:none"><span>Frentes Doguitos</span><div class="num"><button onclick="adj('fr-doguitos',-1)">−</button><input type="number" id="fr-doguitos" value="0" min="0"><button onclick="adj('fr-doguitos',1)">+</button></div></div>
         <div class="fr-row" id="fr-keldog-frrow" style="display:none"><span>Frentes Keldog</span><div class="num"><button onclick="adj('fr-keldog',-1)">−</button><input type="number" id="fr-keldog" value="0" min="0"><button onclick="adj('fr-keldog',1)">+</button></div></div>
@@ -421,6 +422,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
     </div>
     <div id="bs-fr-marcas" class="oculto">
       <div class="frentes" style="margin-top:6px">
+        <div class="fr-row" id="fr-bs-pedigree-frrow" style="display:none"><span>Frentes Ração Seca Pedigree<span class="fr-sub">(todas as linhas)</span></span><div class="num"><button onclick="adj('fr-bs-pedigree',-1)">−</button><input type="number" id="fr-bs-pedigree" value="0" min="0"><button onclick="adj('fr-bs-pedigree',1)">+</button></div></div>
         <div class="fr-row" id="fr-bs-frrow" style="display:none"><span>Frentes Barriguinha Saudável</span><div class="num"><button onclick="adj('fr-bs',-1)">−</button><input type="number" id="fr-bs" value="0" min="0"><button onclick="adj('fr-bs',1)">+</button></div></div>
         <div class="fr-row" id="fr-dogchow-frrow" style="display:none"><span>Frentes Dog Chow</span><div class="num"><button onclick="adj('fr-dogchow',-1)">−</button><input type="number" id="fr-dogchow" value="0" min="0"><button onclick="adj('fr-dogchow',1)">+</button></div></div>
         <div class="fr-row" id="fr-bs-bawwaw-frrow" style="display:none"><span>Frentes BawWaw</span><div class="num"><button onclick="adj('fr-bs-bawwaw',-1)">−</button><input type="number" id="fr-bs-bawwaw" value="0" min="0"><button onclick="adj('fr-bs-bawwaw',1)">+</button></div></div>
@@ -509,6 +511,7 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
     </div>
     <div id="wk-fr-marcas" class="oculto">
       <div class="frentes" style="margin-top:6px">
+        <div class="fr-row" id="fr-wk-total-frrow" style="display:none"><span>Total Frentes Ração Seca Whiskas<span class="fr-sub">(todas as linhas)</span></span><div class="num"><button onclick="adj('fr-wk-total',-1)">−</button><input type="number" id="fr-wk-total" value="0" min="0"><button onclick="adj('fr-wk-total',1)">+</button></div></div>
         <div class="fr-row" id="fr-wk-frrow" style="display:none"><span>Frentes Whiskas Superfoods</span><div class="num"><button onclick="adj('fr-wk',-1)">−</button><input type="number" id="fr-wk" value="0" min="0"><button onclick="adj('fr-wk',1)">+</button></div></div>
         <div class="fr-row" id="fr-wk-purina-frrow" style="display:none"><span>Frentes Purina One</span><div class="num"><button onclick="adj('fr-wk-purina',-1)">−</button><input type="number" id="fr-wk-purina" value="0" min="0"><button onclick="adj('fr-wk-purina',1)">+</button></div></div>
         <div class="fr-row" id="fr-wk-outro-frrow" style="display:none"><span>Frentes outro ração premium gato</span><div class="num"><button onclick="adj('fr-wk-outro',-1)">−</button><input type="number" id="fr-wk-outro" value="0" min="0"><button onclick="adj('fr-wk-outro',1)">+</button></div></div>
@@ -724,15 +727,17 @@ function updSec(pfx){
   const algum=temP||(temC&&m.length>0);
 
   const frMap={
-    fz:{mars:'fr-fz',concs:{Doguitos:'fr-doguitos',Keldog:'fr-keldog',BawWaw:'fr-bawwaw',Outro:'fr-fz-outro'}},
+    fz:{mars:'fr-fz',extra:'fr-fz-pedigree',concs:{Doguitos:'fr-doguitos',Keldog:'fr-keldog',BawWaw:'fr-bawwaw',Outro:'fr-fz-outro'}},
     sh:{mars:'fr-sh',concs:{Qualidy:'fr-qualidy',Churu:'fr-churu',Wampy:'fr-wampy',Nutrisco:'fr-nutrisco',Origens:'fr-origens',Outro:'fr-sh-outro'}},
-    bs:{mars:'fr-bs',concs:{'Dog Chow':'fr-dogchow',BawWaw:'fr-bs-bawwaw',Magnus:'fr-magnus',Faro:'fr-faro','Purina One Cães':'fr-bs-purina',Outro:'fr-bs-outro'}},
-    wk:{mars:'fr-wk',concs:{'Purina One':'fr-wk-purina',Outro:'fr-wk-outro'}},
+    bs:{mars:'fr-bs',extra:'fr-bs-pedigree',concs:{'Dog Chow':'fr-dogchow',BawWaw:'fr-bs-bawwaw',Magnus:'fr-magnus',Faro:'fr-faro','Purina One Cães':'fr-bs-purina',Outro:'fr-bs-outro'}},
+    wk:{mars:'fr-wk',extra:'fr-wk-total',concs:{'Purina One':'fr-wk-purina',Outro:'fr-wk-outro'}},
   };
   const fm=frMap[pfx];
   if(!fm)return;
   // Mars frente row
   sf(fm.mars+'-frrow', temP);
+  // Total (todas as linhas) row
+  if(fm.extra) sf(fm.extra+'-frrow', temP);
   // Conc frente rows
   Object.entries(fm.concs).forEach(([conc,fid])=>{
     sf(fid+'-frrow', temC&&m.includes(conc));
@@ -805,6 +810,7 @@ function coletarDados(){
     fz_pr_bawwaw_50g:pr('fz-bawwaw-50g'), fz_pr_bawwaw_300g:pr('fz-bawwaw-300g'),
     fz_outro_pr:pr('fz-outro'),
     fz_tot_cao:g('fz-tot-cao'), fz_tot_bif:g('fz-tot-bif'),
+    fz_fr_pedigree_total:g('fr-fz-pedigree'),
     fz_fr_fz:g('fr-fz'), fz_fr_doguitos:g('fr-doguitos'), fz_fr_keldog:g('fr-keldog'),
     fz_fr_bawwaw:g('fr-bawwaw'), fz_fr_outro:g('fr-fz-outro'),
     fz_espaco:getR('espaco'),
@@ -831,6 +837,7 @@ function coletarDados(){
     bs_pr_dogchow:pr('bs-dogchow'), bs_pr_bawwaw:pr('bs-bawwaw'),
     bs_pr_magnus:pr('bs-magnus'), bs_pr_faro:pr('bs-faro'), bs_outro_pr:pr('bs-outro'),
     bs_tot_cao:g('bs-tot-cao'), bs_tot_digest:g('bs-tot-digest'),
+    bs_fr_pedigree_total:g('fr-bs-pedigree'),
     bs_fr_bs:g('fr-bs'), bs_fr_dogchow:g('fr-dogchow'), bs_fr_bawwaw:g('fr-bs-bawwaw'),
     bs_fr_magnus:g('fr-magnus'), bs_fr_faro:g('fr-faro'), bs_fr_purina:g('fr-bs-purina'), bs_fr_outro:g('fr-bs-outro'),
 
@@ -846,6 +853,7 @@ function coletarDados(){
     wk_pr_purina_500g:pr('wk-purina-500g'), wk_pr_purina_2kg:pr('wk-purina-2kg'), wk_pr_purina_75kg:pr('wk-purina-75kg'),
     wk_outro_pr:pr('wk-outro'),
     wk_tot_gato:g('wk-tot-gato'), wk_tot_prem:g('wk-tot-prem'),
+    wk_fr_total_seca:g('fr-wk-total'),
     wk_fr_wk:g('fr-wk'), wk_fr_purina:g('fr-wk-purina'), wk_fr_outro:g('fr-wk-outro'),
   };
 }
